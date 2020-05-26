@@ -1,0 +1,62 @@
+#include <iostream>
+using namespace std;
+#define M 3			// 设置默认的行列为3行2列
+#define N 2
+class Matrix    // 矩阵类
+{
+private:
+	int p[M][N];				// 二维数组用于存储矩阵元素
+	int row;
+	int col;
+public:
+	Matrix()    //构造函数
+	{
+		static int a=1;
+		cout<<"构造第"<<a<<"个矩阵，矩阵初始化为0"<<endl;
+		row=M;
+		col=N;
+		for(int i=0; i<row; i++)
+			for(int j=0; j<col; j++)
+			p[i][j]=0;		// 初始化为0
+		cout<<endl;
+		a++;
+	}
+	void input()		// 输入函数
+	{
+		cout<<"请输入一个"<<M<<"行"<<N<<"列的矩阵"<<endl;
+		row=M;
+		col=N;
+		for(int i=0; i<row; i++)
+			for(int j=0; j<col; j++)
+			cin>>p[i][j];
+		cout<<endl;
+	}
+	void display()  const			// 输出函数
+	{	
+		cout<<"矩阵为： "<<endl;
+		for(int i=0; i<M; i++)
+		{
+			for(int j=0; j<N; j++)
+				cout<<p[i][j]<<" ";
+				cout<<endl;
+		}
+	}
+	Matrix& operator + (Matrix &n)		// 重载运算符+返回对象的引用
+	{
+		for(int i=0; i<row; i++)
+			for(int j=0; j<col; j++)
+				p[i][j]+=n.p[i][j];
+		return *this;
+	}
+};
+int main()
+{
+	Matrix m,n;		// 实例化对象m，n，并且在构造函数中初始化为0
+	m.input();
+	m.display();
+	n.input();
+	n.display();
+	cout<<"两个矩阵相加后： ";
+	(m+n).display();
+	return 0;
+}

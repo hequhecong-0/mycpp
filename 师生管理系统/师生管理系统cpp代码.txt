@@ -1,0 +1,89 @@
+#include <iostream>
+#include<string>
+using namespace std;
+class Date
+{
+protected:
+	char* name;
+public:
+	Date()
+	{
+	}
+	Date(char *n)
+	{
+		name=new char[strlen(n)+1];
+		strcpy_s(name,strlen(n)+1,n);
+	}
+	void print() const
+	{
+		cout<<name<<endl;
+	}
+};
+class Teacher:public virtual Date
+{
+protected:
+	double sal;
+public:
+	Teacher(char *n,double s) : Date(n)
+	{
+		sal=s;
+	}
+	void print() const
+	{
+		cout<<"姓名： "<<name<<" 工资： "<<sal<<endl;
+	}
+};
+class Student:public virtual Date
+{
+protected:
+	int id;
+public:
+	Student(char *n,int id) : Date(n) 
+	{
+		this->id=id;
+	}
+		void print() const
+	{
+		cout<<"姓名： "<<name<<" 学号： "<<id<<endl;
+	}
+};
+class Postgrad:public Student
+{
+protected:
+	char *dn;
+public:
+	Postgrad(char *n,char *department,int i) : Student(n,i),Date(n)
+	{
+		dn=new char[strlen(department)+1];
+		strcpy_s(dn,strlen(department)+1,department);
+	}
+	void print() const
+	{
+		cout<<"姓名： "<<name<<" 学号： "<<id<<"  院系："<<dn<<endl;
+	}
+};
+class Tpost:public Postgrad,public Teacher
+{
+public:
+	Tpost(char *n,char *department,int i,double s) : Postgrad(n,department,i),Teacher(n,s),Date(n)
+	{
+
+	}
+	void print() const
+	{
+		cout<<"姓名： "<<name<<" 学号： "<<id<<"  院系："<<dn<<"  工资: "<<sal<<endl;
+	}
+};
+
+int main()
+{
+	Teacher a("陈俊宇1",2121.1);
+	a.print();
+	Student b("陈俊宇2", 19230211);
+	b.print();
+	Postgrad c("陈俊宇3","软件工程",19230211);
+	c.print();
+	Tpost d("陈俊宇4","软件工程",19230211,10000.2);
+	d.print();
+	return 0;
+}

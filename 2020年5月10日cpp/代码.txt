@@ -1,0 +1,241 @@
+
+//第二题
+#include <iostream>
+using namespace std;
+
+class A
+{
+	int n;
+public:
+	A(int x)
+	{
+		n=x;
+		cout<< " constructing A n = "<<n<< endl;
+	}
+	~A()
+	{
+		cout<<" destructing A n = "<<n<<endl;
+	}
+};
+class B
+{
+	int n;
+	A a;
+public:
+	B(int x,int y): a(x)
+	{
+		n=y;
+		cout<< " constructing B n = "<<n<< endl;
+	}
+	~B()
+	{
+		cout<<" destructing B n = "<<n<<endl;
+	}
+};
+class C
+{
+	int n;
+	A a;
+	B b;
+public:
+	C(int x,int y,int z): b(x, y),a(x*2)
+	{
+		n=z;
+		cout<< " constructing C n = "<<n<< endl;
+	}
+	~C()
+	{
+		cout<<" destructing C n = "<<n<<endl;
+	}
+};
+int main()
+{
+	C obj(5 ,6, 7);
+	return 0;
+
+
+}
+
+// 第三题代码
+#include <iostream>
+using namespace std;
+class A
+{
+public:
+	A()
+	{
+		cout<<'A';
+	}
+};
+class B
+{
+public:
+	B()
+	{
+		cout<<'B';
+	}
+};
+class C: public A
+{
+public:
+	C()
+	{
+		cout <<'C';
+	}
+};
+class D: public A, public B
+{
+public:
+	D()
+	{
+		cout<<'D';
+	}
+};
+class E: public B,public virtual C
+{
+public:
+	D d;
+	E()
+	{
+		cout<<'E';
+	}
+};
+class F: public virtual C,public D,public E
+{
+public :
+	C c,d;
+	E e;
+	F()
+	{
+		cout <<"F";
+	}
+};
+
+int main()
+{
+	A a;
+	cout <<'\n';
+	B b;
+	cout <<'\n';
+	C c;
+	cout <<'\n';
+	D d;
+	cout <<'\n';
+	E e;
+	cout <<'\n';
+	F f;
+	cout <<'\n';
+
+
+	return 0;
+}
+
+//第五题代码
+#include <iostream>
+using namespace std;
+
+
+class A
+{
+public:
+	int n;
+};
+class B: virtual public A
+{
+};
+class C: virtual public A
+{
+};
+class D: public B,public C
+{
+};
+inline void print(D &d)
+{
+	cout <<"d.A::n = "<<d.A::n<<", d.B::n = "<<d.B::n;
+	cout <<", d.C::n = "<<d.C::n<<", d.D::n = "<<d.D::n<<"\n";
+
+}
+int main()
+{
+	D d;
+	d.A::n=10;
+	print(d);
+	d.B::n=20;
+	print(d);
+	d.C::n=30;
+	print(d);
+	return 0;
+
+}
+
+// 第六题代码
+#include <iostream>
+using namespace std;
+
+
+class A
+{
+public:
+	int n;
+};
+class B: virtual public A
+{
+};
+class C: virtual public A
+{
+};
+class D: public B,public C
+{
+};
+inline void print(D &d)
+{
+	cout <<"d.A::n = "<<d.A::n<<", d.B::n = "<<d.B::n;
+	cout <<", d.C::n = "<<d.C::n<<", d.D::n = "<<d.D::n<<"\n";
+
+}
+int main()
+{
+	D d;
+	d.A::n=10;
+	print(d);
+	d.B::n=20;
+	print(d);
+	d.C::n=30;
+	print(d);
+	return 0;
+
+}
+
+// 第六题代码
+#include <iostream>
+using namespace std;
+class X
+{
+public:
+	void f()
+	{
+		cout<<"X::f( )   executing\n";
+	}
+};
+class Y: public X
+{
+public:
+		void f()
+	{
+		cout<<"Y::f( )   executing\n";
+	}
+};
+int main()
+{
+	X x;
+	Y y;
+	X *p=&x;
+	p->f();
+	p=&y;
+	p->f();
+	y.f();
+
+	return 0;
+}
+
+

@@ -1,0 +1,178 @@
+//2020 4 28实验作业
+第一题：
+#include <iostream>
+using namespace std;
+
+class Gril;
+class Boy
+{
+private:
+	char *name;
+   	int age;
+public:
+	Boy(char N[],int a):age(a)
+	{
+		name=new char [strlen(N)+1];
+		strcpy_s(name,strlen(N)+1,N);
+	}
+	~Boy()
+	{
+		delete [ ] name;
+	}
+	void Print()
+	{
+		cout<<"男生姓名： "<<name<<endl;
+		cout<<"男生年龄： "<<age<<endl;
+	}
+	//void VistGril(Gril & gril)								//第3问和第5问试图访问Gril类的私有成员时解除注释
+	//{
+	//	cout<<"女生姓名： "<<gril.name<<endl;
+	//	cout<<"女生年龄： "<<gril.age<<endl;
+	//}
+
+	//friend Gril;												//第2问声明Gril是Boy友元时解除注释
+	friend void VisitBoyGril(Boy & boy,Gril & gril);		//第6问解除注释
+};
+
+class Gril
+{
+private:
+	char *name;
+	int age;
+public:
+	Gril(char N[],int a):age(a)
+	{
+		name=new char [strlen(N)+1];
+		strcpy_s(name,strlen(N)+1,N);
+	}
+	~Gril()
+	{
+		delete [ ] name;
+	}
+	void Print()
+	{
+		cout<<"女生姓名： "<<name<<endl;
+		cout<<"女生年龄： "<<age<<endl;
+	}
+	//void VistBoy(Boy & boy)									//第2问访问Boy私有成员时解除注释
+	//{
+	//	cout<<"男生姓名： "<<boy.name<<endl;
+	//	cout<<"男生年龄： "<<boy.age<<endl;
+	//}
+
+	//friend Boy;						//在第5问声明Boy是Gril的友元类时候解除注释
+	friend void VisitBoyGril(Boy & boy,Gril & gril);		//第6问解除注释
+};
+
+void VisitBoyGril(Boy & boy,Gril & gril)					//第6问解除注释
+{
+	cout<<"男生姓名: "<<boy.name<<endl;
+	cout<<"男生年龄: "<<boy.age<<endl;
+	cout<<"女生姓名: "<<gril.name<<endl;
+	cout<<"女生年龄: "<<gril.age<<endl;
+}
+
+int main()
+{
+	Boy boy("陈俊宇",19);
+	Gril gril("张某某",18);
+	//boy.Print();					//第4问输出各自的成员函数时解除注释
+	//gril.Print();					//
+	//boy.VistGril(gril);			//第3问,第5问试图访问Gril类的私有成员时解除注释
+	//gril.VistBoy(boy);   		//第2问访问Boy私有成员时解除注释
+	 VisitBoyGril(boy, gril);	//第6问解除注释
+	return 0;
+}
+
+第二题：
+头文件代码：
+
+#include <iostream>
+using namespace std;
+
+class Score
+{
+private:
+	int hometeam;
+	int opponent;
+public:
+	Score(int h=0, int o=0);
+	void Set(int h,int o);
+	int GetHometeam() const;
+	int GetOpponent() const;
+	void Display() const;
+};
+
+Score ::	Score(int h, int o)
+	{
+		hometeam=h;
+		opponent=o;
+	}
+void Score ::  Set(int h,int o)
+	{
+		hometeam=h;
+		opponent=o;
+	}
+int Score :: GetHometeam() const
+	{
+		return hometeam;
+	}
+int Score :: GetOpponent() const
+	{
+		return opponent;
+	}
+void Score :: Display() const
+	{
+		cout<<hometeam<<": "<<opponent<<endl;
+	}
+
+void result(Score *p, Score &e)
+{
+	int coutHometeamWins=0;
+	for(int i=0; i<4; i++)
+	{
+	 if ( p[i].GetHometeam()>p[i].GetOpponent() )
+		{
+			coutHometeamWins++;
+		}
+	}
+	e.Set(coutHometeamWins, 5-coutHometeamWins);
+}
+
+源文件代码：
+
+#include <iostream>
+#include "exp3_2.h"
+using namespace std;
+
+int main()
+{
+	Score game[5]={Score(98, 67), Score(105, 103), Score(88, 96)};
+	Score end;
+	game[3].Set(83, 96);
+	game[4].Set(104,110);
+	int n=1;
+	cout<<"请输入想要查询的场次输入(‘0’退出查询)：\n";
+	cin>>n;
+	while(n!=0)
+	{
+		cout<<"该场的得分为： ";
+		game[n-1].Display();
+		cin>>n;
+			if (n==0)
+			{
+					cout<<"已退出查询"<<endl;
+					break;
+			}
+	}
+	result(game,end);
+	cout<<"总比分为： "<<endl;
+	end.Display();
+	if (end.GetHometeam()>end.GetOpponent())
+	{
+		cout<<"主队胜利！"<<endl;
+	}
+	else 
+		cout<<"客队胜利！"<<endl;
+	return 0;
+}
