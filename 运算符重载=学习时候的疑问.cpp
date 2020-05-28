@@ -60,11 +60,9 @@ int main()
     Student zhang("computer");
     Student wang("LLL");
     //wang = zhang;				// 如果是赋值的等号就会调用运算符重载
-	Student Li=wang;				// 如果是初始化的等号就会调用拷贝构造
+    Student Li = wang; // 如果是初始化的等号就会调用拷贝构造
     zhang.Show();
     wang.Show();
-	Li.Show();
+    Li.Show();
     return 0;
 }
-
-
